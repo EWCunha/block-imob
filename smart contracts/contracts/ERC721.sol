@@ -1,18 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.15;
 
+import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
 /// @notice Modern, minimalist, and gas efficient ERC-721 implementation.
 /// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol)
-abstract contract ERC721 {
+abstract contract ERC721 is ReentrancyGuard {
     /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
 
-    event Transfer(address indexed from, address indexed to, uint256 indexed id);
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed id
+    );
 
-    event Approval(address indexed owner, address indexed spender, uint256 indexed id);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 indexed id
+    );
 
-    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+    event ApprovalForAll(
+        address indexed owner,
+        address indexed operator,
+        bool approved
+    );
 
     /*//////////////////////////////////////////////////////////////
                          METADATA STORAGE/LOGIC
@@ -66,7 +80,10 @@ abstract contract ERC721 {
     function approve(address spender, uint256 id) public virtual {
         address owner = _ownerOf[id];
 
-        require(msg.sender == owner || isApprovedForAll[owner][msg.sender], "NOT_AUTHORIZED");
+        require(
+            msg.sender == owner || isApprovedForAll[owner][msg.sender],
+            "NOT_AUTHORIZED"
+        );
 
         getApproved[id] = spender;
 
@@ -89,7 +106,9 @@ abstract contract ERC721 {
         require(to != address(0), "INVALID_RECIPIENT");
 
         require(
-            msg.sender == from || isApprovedForAll[from][msg.sender] || msg.sender == getApproved[id],
+            msg.sender == from ||
+                isApprovedForAll[from][msg.sender] ||
+                msg.sender == getApproved[id],
             "NOT_AUTHORIZED"
         );
 
@@ -112,12 +131,17 @@ abstract contract ERC721 {
         address from,
         address to,
         uint256 id
-    ) public virtual {
+    ) public virtual nonReentrant {
         transferFrom(from, to, id);
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, from, id, "") ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    from,
+                    id,
+                    ""
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
@@ -128,12 +152,17 @@ abstract contract ERC721 {
         address to,
         uint256 id,
         bytes calldata data
-    ) public virtual {
+    ) public virtual nonReentrant {
         transferFrom(from, to, id);
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, from, id, data) ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    from,
+                    id,
+                    data
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
@@ -143,7 +172,12 @@ abstract contract ERC721 {
                               ERC165 LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        returns (bool)
+    {
         return
             interfaceId == 0x01ffc9a7 || // ERC165 Interface ID for ERC165
             interfaceId == 0x80ac58cd || // ERC165 Interface ID for ERC721
@@ -190,12 +224,17 @@ abstract contract ERC721 {
                         INTERNAL SAFE MINT LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function _safeMint(address to, uint256 id) internal virtual {
+    function _safeMint(address to, uint256 id) internal virtual nonReentrant {
         _mint(to, id);
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, address(0), id, "") ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    address(0),
+                    id,
+                    ""
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
@@ -205,15 +244,32 @@ abstract contract ERC721 {
         address to,
         uint256 id,
         bytes memory data
-    ) internal virtual {
+    ) internal virtual nonReentrant {
         _mint(to, id);
 
         require(
             to.code.length == 0 ||
-                ERC721TokenReceiver(to).onERC721Received(msg.sender, address(0), id, data) ==
+                ERC721TokenReceiver(to).onERC721Received(
+                    msg.sender,
+                    address(0),
+                    id,
+                    data
+                ) ==
                 ERC721TokenReceiver.onERC721Received.selector,
             "UNSAFE_RECIPIENT"
         );
+    }
+
+    function _isApprovedOrOwner(address spender, uint256 tokenId)
+        internal
+        view
+        virtual
+        returns (bool)
+    {
+        address owner = ERC721.ownerOf(tokenId);
+        return (spender == owner ||
+            isApprovedForAll[owner][spender] ||
+            getApproved[tokenId] == spender);
     }
 }
 
