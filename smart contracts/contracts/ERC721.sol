@@ -100,7 +100,7 @@ abstract contract ERC721 is ReentrancyGuard {
         address from,
         address to,
         uint256 id
-    ) public virtual {
+    ) public virtual nonReentrant {
         require(from == _ownerOf[id], "WRONG_FROM");
 
         require(to != address(0), "INVALID_RECIPIENT");
