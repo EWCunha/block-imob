@@ -2,24 +2,9 @@
 pragma solidity ^0.8.17;
 
 import "./ERC4907.sol";
+import "./interfaces/IBlockImob.sol";
 
-contract BlockImob is ERC4907 {
-    enum DealType {
-        RENT,
-        SELL
-    }
-
-    struct Deal {
-        DealType dealType;
-        address dealAddress;
-        address fiiAddress;
-    }
-
-    struct Query {
-        string district;
-        uint256 registry;
-    }
-
+contract BlockImob is ERC4907, IBlockImob {
     mapping(address => bool) public allowed;
     mapping(uint256 => string) public tokenIdToURI;
     mapping(uint256 => Deal) public tokenIdToDeal;
@@ -27,19 +12,6 @@ contract BlockImob is ERC4907 {
     mapping(uint256 => Query) public tokenIdToQuery;
     string public baseURI;
     uint256 public nextTokenId = 1; // 0 for token no longer active
-
-    event UpdatedTokenURI(
-        uint256 indexed tokenId,
-        string indexed newURI,
-        string newURIText
-    );
-    event UpdatedBaseURI(string indexed newBaseURI, string newBaseURIText);
-    event UpdatedTokenDeal(
-        uint256 indexed tokenId,
-        DealType dealType,
-        address indexed dealAddress,
-        address indexed fiiAddress
-    );
 
     constructor(string memory _name, string memory _symbol)
         ERC4907(_name, _symbol)
@@ -97,12 +69,20 @@ contract BlockImob is ERC4907 {
         _burn(_tokenId);
     }
 
+    function setOperator(address _operator, bool _approved)
+        external
+        onlyAllowed
+    {
+        require(_operator != address(0), "BlockImob: Invalid operator");
+        setApprovalForAll(_operator, _approved);
+    }
+
     function updateTokenDeal(
         uint256 _tokenId,
         DealType _dealType,
         address _dealAddress,
         address _fiiAddress
-    ) external onlyAllowed validateTokenId(_tokenId) {
+    ) external override onlyAllowed validateTokenId(_tokenId) {
         tokenIdToDeal[_tokenId].dealType = _dealType;
         tokenIdToDeal[_tokenId].dealAddress = _dealAddress;
         tokenIdToDeal[_tokenId].fiiAddress = _dealType == DealType.SELL
@@ -117,14 +97,17 @@ contract BlockImob is ERC4907 {
         emit UpdatedBaseURI(_newBaseURI, _newBaseURI);
     }
 
-    function setTokenURI(uint256 _tokenId, string memory _uri)
-        external
-        onlyAllowed
-        validateTokenId(_tokenId)
-        validateURI(_uri)
-    {
+    function setTokenURI(
+        uint256 _tokenId,
+        string memory _uri,
+        string memory _newValue
+    ) external onlyAllowed validateTokenId(_tokenId) validateURI(_uri) {
+        require(
+            bytes(_newValue).length > 0,
+            "BlockImob: No value added/updated"
+        );
         tokenIdToURI[_tokenId] = _uri;
-        emit UpdatedTokenURI(_tokenId, _uri, _uri);
+        emit UpdatedTokenURI(_tokenId, _uri, _uri, _newValue);
     }
 
     function tokenURI(uint256 _tokenId)
