@@ -58,6 +58,15 @@ contract Rent {
             }
         }
 
+        blockImob.setUser(tokenId, address(0), 0);
+
+        blockImob.updateTokenDeal(
+            tokenId,
+            IBlockImob.DealType.RENT,
+            address(0),
+            address(0)
+        );
+
         emit RentEnded(msg.sender);
         selfdestruct(payable(gov));
     }
