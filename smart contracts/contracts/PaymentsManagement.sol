@@ -27,7 +27,7 @@ contract PaymentsManagement {
     }
 
     modifier onlyAllowed() {
-        require(blockImobContract.allowed(msg.sender), "PayM: Not allowed");
+        require(blockImobContract.returnAllowed(msg.sender), "PayM: Not allowed");
         _;
     }
 

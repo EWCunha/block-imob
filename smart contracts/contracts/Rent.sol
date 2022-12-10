@@ -70,7 +70,7 @@ contract Rent {
     }
 
     function endRent() external {
-        if (!blockImob.allowed(msg.sender)) {
+        if (!blockImob.returnAllowed(msg.sender)) {
             uint256 months = expires / 30 days + 1;
 
             for (uint256 i = 1; i < months; ++i) {

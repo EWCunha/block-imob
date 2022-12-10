@@ -20,7 +20,7 @@ contract FiiManagement {
     }
 
     modifier onlyAllowed() {
-        require(blockImobContract.allowed(msg.sender), "Fii Management: Not allowed");
+        require(blockImobContract.returnAllowed(msg.sender), "Fii Management: Not allowed");
         _;
     }
 

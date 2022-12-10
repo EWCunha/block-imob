@@ -34,7 +34,7 @@ interface IBlockImob is IERC4907 {
         address indexed fiiAddress
     );
 
-    function allowed(address _party) external view returns (bool);
+    function returnAllowed(address _party) external view returns (bool);
 
     function nextTokenId() external view returns (uint256);
 

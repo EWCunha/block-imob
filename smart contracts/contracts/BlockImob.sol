@@ -127,7 +127,7 @@ contract BlockImob is ERC4907, IBlockImob {
     function uriFromQuery(string memory _district, uint256 _registry)
         external
         view
-        returns(string)
+        returns(string memory)
     {
         return tokenURI(queryToTokenId[_district][_registry]);
     }
@@ -155,8 +155,8 @@ contract BlockImob is ERC4907, IBlockImob {
     }
 
 
-    function allowed(address _party) external view returns (bool){
-        return allowed(_party);
+    function returnAllowed(address _party) external view returns (bool){
+        return allowed[_party];
     }
 
 }
