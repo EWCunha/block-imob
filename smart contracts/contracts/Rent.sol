@@ -5,15 +5,27 @@ import "./interfaces/IBlockImob.sol";
 import "./interfaces/IERC20.sol";
 
 contract Rent {
+    
     IBlockImob public immutable blockImob;
+    
     address public immutable renter;
+    
     address public immutable gov;
+    
     uint256 public immutable tokenId;
+    
     uint256 public expires;
+    
     uint256 public price;
+
+    uint128 public monthsLeft;
+    
     IERC20 constant paymentToken =
         IERC20(0xC5375c73a627105eb4DF00867717F6e301966C32);
+
     mapping(uint256 => bool) public monthPaid;
+
+    error MonthNotPaid(string text,uint256 month );
 
     event MonthPaid(uint256 indexed month);
     event RentEnded(address indexed _party);
@@ -25,6 +37,7 @@ contract Rent {
         uint256 _expires,
         uint256 _price
     ) {
+        _cutInMonths(_expires);
         renter = _renter;
         gov = _gov;
         tokenId = _tokenId;
@@ -33,18 +46,19 @@ contract Rent {
         blockImob = IBlockImob(msg.sender);
     }
 
-    function payRent(uint256 _month) external payable {
+    function payRent() external payable {
         require(msg.sender == renter, "Rent: Not renter");
+        require(monthsLeft > 0, "Rent ended");
         require(
             !(paymentToken.allowance(msg.sender, address(this)) < price),
             "Rent: Insuficient allowance"
         );
-        require(!monthPaid[_month], "Rent: Month paid");
+        require(!monthPaid[monthsLeft], "Rent: Month paid");
 
-        monthPaid[_month] = true;
+        monthPaid[monthsLeft] = true;
         paymentToken.transferFrom(msg.sender, gov, price);
 
-        emit MonthPaid(_month);
+        emit MonthPaid(monthsLeft);
     }
 
     function endRent() external {
@@ -53,7 +67,8 @@ contract Rent {
 
             for (uint256 i = 1; i < months; ++i) {
                 if (!monthPaid[i]) {
-                    revert("Rent: Month(s) not paid");
+                    // revert("Rent: Month(s) not paid");
+                    revert MonthNotPaid({text:"Rent: Month not paid", month:i});
                 }
             }
         }
@@ -67,7 +82,17 @@ contract Rent {
             address(0)
         );
 
+        (bool success) = paymentToken.transfer(gov, paymentToken.balanceOf(address(this)));
+        require (success, "Withdraw not successful");
+
         emit RentEnded(msg.sender);
         selfdestruct(payable(gov));
+    }
+
+
+    function _cutInMonths(uint256 _timestamp) internal {
+        require (_timestamp > (block.timestamp + 30 days), "Can't rent less than 30 days");
+
+        monthsLeft = uint128((_timestamp - block.timestamp)/2678400);
     }
 }
