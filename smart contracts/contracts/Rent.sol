@@ -56,7 +56,15 @@ contract Rent {
         require(!monthPaid[monthsLeft], "Rent: Month paid");
 
         monthPaid[monthsLeft] = true;
-        paymentToken.transferFrom(msg.sender, gov, price);
+        bool success = paymentToken.transferFrom(msg.sender, gov, price);
+        require(success, "Rent:Transaction incomplete");
+
+
+        address fii = blockImob.returnFiiAddress(tokenId);
+        if(fii != address(0)){
+            success = paymentToken.transfer(fii, (price*95)/100);
+            require(success, "Rent: Fii payment errored");
+        }
 
         emit MonthPaid(monthsLeft);
     }
@@ -91,7 +99,7 @@ contract Rent {
 
 
     function _cutInMonths(uint256 _timestamp) internal {
-        require (_timestamp > (block.timestamp + 30 days), "Can't rent less than 30 days");
+        require (_timestamp > (block.timestamp + 30 days), "Rent: Can't rent less than 30 days");
 
         monthsLeft = uint128((_timestamp - block.timestamp)/2678400);
     }
