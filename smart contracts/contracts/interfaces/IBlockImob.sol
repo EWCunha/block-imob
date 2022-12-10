@@ -44,4 +44,6 @@ interface IBlockImob is IERC4907 {
         address _dealAddress,
         address _fiiAddress
     ) external;
+
+    function returnFiiAddress(uint256 _tokenId) external view returns(address);
 }

@@ -150,6 +150,11 @@ contract BlockImob is ERC4907, IBlockImob {
     // }
 
 
+    function returnFiiAddress(uint256 _tokenId) external view returns(address){
+        return tokenIdToDeal[_tokenId].fiiAddress;
+    }
+
+
     function allowed(address _party) external view returns (bool){
         return allowed(_party);
     }
