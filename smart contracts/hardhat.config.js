@@ -14,11 +14,6 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      // forking: {
-      // //   url: "https://rpc.ankr.com/celo",
-      // //   //url: "https://eth-mainnet.g.alchemy.com/v2/VmVQQLge3XZR43ratreK9R9OQdwr1SkJ",
-      // //   // url: "https://polygon-mainnet.g.alchemy.com/v2/sgGpIHWGIXwJcVatpKKW4j0k3jY9mg1O",
-      // },
     },
     alfajores: {
       // can be replaced with the RPC url of your choice.
@@ -33,15 +28,11 @@ module.exports = {
         [process.env.PRIVATE_KEY]
       ],
     }
-    // testnet: {
-    //   url: process.env.TESTNET_RPC,
-    //   accounts: [process.env.PRIVATE_KEY]
-    // }
   },
   etherscan: {
     apiKey: {
-        alfajores: process.env.CELOSCAN_APIKEY,
-        celo: process.env.CELOSCAN_APIKEY
+        alfajores: "EWFHPD8U7PQ2WB5HS7J2Y17P2EYB8M8WU1",
+        celo: "EWFHPD8U7PQ2WB5HS7J2Y17P2EYB8M8WU1"
     }
   }
 };
