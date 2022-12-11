@@ -8,7 +8,7 @@ contract Sell {
     address public immutable buyer;
     address public immutable seller;
     address public buyerMediator;
-    address public sellerMediator;
+    // address public sellerMediator;
     IBlockImob public immutable blockImob;
     IERC20 constant paymentToken =
         IERC20(0xC5375c73a627105eb4DF00867717F6e301966C32);
@@ -25,7 +25,7 @@ contract Sell {
         address _buyer,
         address _seller,
         address _buyerMediator,
-        address _sellerMediator,
+        // address _sellerMediator,
         address _token,
         uint256 _tokenId,
         uint256 _price,
@@ -34,7 +34,7 @@ contract Sell {
         buyer = _buyer;
         seller = _seller;
         buyerMediator = _buyerMediator;
-        sellerMediator = _sellerMediator;
+        // sellerMediator = _sellerMediator;
         blockImob = IBlockImob(_token);
         tokenId = _tokenId;
         price = _price;
@@ -45,8 +45,9 @@ contract Sell {
         require(
             _party == buyer ||
                 _party == seller ||
-                _party == buyerMediator ||
-                _party == sellerMediator,
+                _party == buyerMediator 
+                //|| _party == sellerMediator
+                ,
             "Sell: Not allowed"
         );
         _;
@@ -71,9 +72,9 @@ contract Sell {
         );
         if (
             (sellApproved[buyer] && sellApproved[seller]) ||
-            (sellApproved[buyer] && sellApproved[sellerMediator]) ||
+            // (sellApproved[buyer] && sellApproved[sellerMediator]) ||
             (sellApproved[seller] && sellApproved[buyerMediator]) ||
-            (sellApproved[buyerMediator] && sellApproved[sellerMediator])
+            (sellApproved[buyerMediator] /*&& sellApproved[sellerMediator]*/)
         ) {
             paymentToken.transferFrom(msg.sender, gov, price);
 
