@@ -12,8 +12,8 @@ export const { chains, provider, webSocketProvider } = configureChains(
     chain.polygonMumbai,
   ],
   [
-    alchemyProvider({ apiKey: "U-i5eSiiq8Y_RdbUe2sebmp2svtm0wDo" }),
-    infuraProvider({apiKey: "e871044ecff627703c271dc6ee41ba40"}),
+    alchemyProvider({ apiKey: "" }),
+    infuraProvider({apiKey: ""}),
     publicProvider()
   ]
 );
