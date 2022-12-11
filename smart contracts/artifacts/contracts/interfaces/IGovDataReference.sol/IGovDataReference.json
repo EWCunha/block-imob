@@ -4,41 +4,64 @@
   "sourceName": "contracts/interfaces/IGovDataReference.sol",
   "abi": [
     {
+      "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_idImob",
+          "type": "uint256"
+        }
+      ],
+      "name": "ConsultImobReg",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_registryRural",
+          "type": "uint256"
+        }
+      ],
+      "name": "ConsultMapRural",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
           "internalType": "string",
-          "name": "_base",
+          "name": "_map",
           "type": "string"
         },
         {
-          "internalType": "string",
-          "name": "_quote",
-          "type": "string"
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_registryRural",
+          "type": "uint256"
         }
       ],
-      "name": "getReferenceData",
+      "name": "confrontMapEvent",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_idImob",
+          "type": "uint256"
+        }
+      ],
+      "name": "ConsultRegular",
       "outputs": [
         {
-          "components": [
-            {
-              "internalType": "uint256",
-              "name": "rate",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "lastUpdatedBase",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "lastUpdatedQuote",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct IGovDataReference.ReferenceData",
-          "name": "",
-          "type": "tuple"
+          "internalType": "bool",
+          "name": "regular",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -47,39 +70,46 @@
     {
       "inputs": [
         {
-          "internalType": "string[]",
-          "name": "_bases",
-          "type": "string[]"
+          "internalType": "string",
+          "name": "_map",
+          "type": "string"
         },
         {
-          "internalType": "string[]",
-          "name": "_quotes",
-          "type": "string[]"
+          "internalType": "uint256",
+          "name": "_registryRural",
+          "type": "uint256"
         }
       ],
-      "name": "getReferenceDataBulk",
+      "name": "confrontMap",
       "outputs": [
         {
-          "components": [
-            {
-              "internalType": "uint256",
-              "name": "rate",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "lastUpdatedBase",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "lastUpdatedQuote",
-              "type": "uint256"
-            }
-          ],
-          "internalType": "struct IGovDataReference.ReferenceData[]",
+          "internalType": "bool",
+          "name": "regular",
+          "type": "bool"
+        },
+        {
+          "internalType": "string",
           "name": "",
-          "type": "tuple[]"
+          "type": "string"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_registryRural",
+          "type": "uint256"
+        }
+      ],
+      "name": "consultMap",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "regular",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",

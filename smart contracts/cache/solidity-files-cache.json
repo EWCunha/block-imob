@@ -334,8 +334,8 @@
       ]
     },
     "/Users/gustavo_deps/Documents/GitHub/block-imob/smart contracts/contracts/PaymentsManagement.sol": {
-      "lastModificationDate": 1670764397829,
-      "contentHash": "267af9ab8422c8069170f09e19e8da95",
+      "lastModificationDate": 1670764546420,
+      "contentHash": "d5e9d3ec9c7f80ea6a98c6fd6172185f",
       "sourceName": "contracts/PaymentsManagement.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -363,7 +363,8 @@
       "imports": [
         "./Sell.sol",
         "./Rent.sol",
-        "./interfaces/IBlockImob.sol"
+        "./interfaces/IBlockImob.sol",
+        "./interfaces/IGovDataReference.sol"
       ],
       "versionPragmas": [
         "^0.8.17"
@@ -486,8 +487,8 @@
       ]
     },
     "/Users/gustavo_deps/Documents/GitHub/block-imob/smart contracts/contracts/OracleGov.sol": {
-      "lastModificationDate": 1670680395888,
-      "contentHash": "8ce4611f2049a6af1b41eaed016531c4",
+      "lastModificationDate": 1670764507013,
+      "contentHash": "b68bde0d3c117b6eb291440d76d2fc88",
       "sourceName": "contracts/OracleGov.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -513,7 +514,8 @@
         }
       },
       "imports": [
-        "./interfaces/IGovDataReference.sol"
+        "./interfaces/IGovDataReference.sol",
+        "./BlockImob.sol"
       ],
       "versionPragmas": [
         "^0.8.9"
@@ -523,8 +525,8 @@
       ]
     },
     "/Users/gustavo_deps/Documents/GitHub/block-imob/smart contracts/contracts/interfaces/IGovDataReference.sol": {
-      "lastModificationDate": 1670680395889,
-      "contentHash": "0b1b3448460d28c0d939705595d72320",
+      "lastModificationDate": 1670764507014,
+      "contentHash": "305b36daaa3590f5f5d615311d8bba38",
       "sourceName": "contracts/interfaces/IGovDataReference.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -555,6 +557,43 @@
       ],
       "artifacts": [
         "IGovDataReference"
+      ]
+    },
+    "/Users/gustavo_deps/Documents/GitHub/block-imob/smart contracts/contracts/Consult.sol": {
+      "lastModificationDate": 1670764507013,
+      "contentHash": "1e766fae7a3c4ccb97545be07b52ada2",
+      "sourceName": "contracts/Consult.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1000
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IGovDataReference.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "ConsultImob"
       ]
     }
   }
