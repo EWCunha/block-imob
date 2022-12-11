@@ -1,27 +1,41 @@
 // // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-//Contract será Interface que recebe as informações de dados
-//referencia d material é no próprio exemplo de oráculo usado pela Celo:
-//https://docs.bandchain.org/band-standard-dataset/using-band-dataset/using-band-dataset-evm.html
-
+//Contract será Interface referente a consulta se estao regulares ou nao
 interface IGovDataReference {
-    /// A structure returned whenever someone requests for standard reference data.
-    struct ReferenceData {
-        uint256 rate; // base/quote exchange rate, multiplied by 1e18.
-        uint256 lastUpdatedBase; // UNIX epoch of the last time when base price gets updated.
-        uint256 lastUpdatedQuote; // UNIX epoch of the last time when quote price gets updated.
-    }
 
-    /// Returns the price data for the given base/quote pair. Revert if not available.
-    function getReferenceData(string memory _base, string memory _quote)
-        external
-        view
-        returns (ReferenceData memory);
+    event ConsultMapRural(
+      uint256 indexed _registryRural
+    );
 
-    /// Similar to getReferenceData, but with multiple base/quote pairs at once.
-    function getReferenceDataBulk(string[] memory _bases, string[] memory _quotes)
-        external
-        view
-        returns (ReferenceData[] memory);
+    event ConsultImobReg(
+      uint256 indexed _idImob
+    );
+
+    event confrontMapEvent(
+      string _map,
+      uint256 indexed _registryRural
+    );
+
+    function ConsultRegular(uint256 _idImob)
+    external 
+    view
+    returns (
+      bool regular
+    );
+
+    function consultMap(uint256 _registryRural)
+    external 
+    view
+    returns (
+      bool regular
+    );
+
+    function confrontMap(string memory _map, uint256 _registryRural)
+    external 
+    returns (
+      bool regular,
+      string memory
+    );
+
 }

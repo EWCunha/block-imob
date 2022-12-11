@@ -4,9 +4,11 @@ pragma solidity ^0.8.17;
 import "./Sell.sol";
 import "./Rent.sol";
 import "./interfaces/IBlockImob.sol";
+import "./interfaces/IGovDataReference.sol";
 
 contract PaymentsManagement {
     IBlockImob blockImobContract;
+    IGovDataReference oracleConsult;
 
     event Rented(
         uint256 indexed tokenId,
@@ -22,8 +24,9 @@ contract PaymentsManagement {
         uint256 amount
     );
 
-    constructor(address _blockImob) {
+    constructor(address _blockImob, address _oracleconsult) {
         blockImobContract = IBlockImob(_blockImob);
+        oracleConsult = IGovDataReference(_oracleconsult);
     }
 
     modifier onlyAllowed() {
@@ -60,6 +63,7 @@ contract PaymentsManagement {
         validateAddress(_moderatorFrom)
         validateAddress(_moderatorTo)
     {
+        require(oracleConsult.ConsultRegular(_tokenId) == true, "not regularized");
         Sell sell = new Sell(
             _to,
             _from,
@@ -88,6 +92,7 @@ contract PaymentsManagement {
         uint256 _rentPrice
     ) external onlyAllowed validateTokenId(_tokenId) validateAddress(_renter) {
         require(_days > 0, "PayM: 0 days given");
+        require(oracleConsult.ConsultRegular(_tokenId) == true, "not regularized");
 
         uint256 expires = block.timestamp + _days * 1 days;
 
