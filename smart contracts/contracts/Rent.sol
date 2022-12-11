@@ -21,7 +21,7 @@ contract Rent {
     uint128 public monthsLeft;
     
     IERC20 constant paymentToken =
-        IERC20(0xC5375c73a627105eb4DF00867717F6e301966C32);
+        IERC20(0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787);
 
     mapping(uint256 => bool) public monthPaid;
 

@@ -11,7 +11,7 @@ contract Sell {
     // address public sellerMediator;
     IBlockImob public immutable blockImob;
     IERC20 constant paymentToken =
-        IERC20(0xC5375c73a627105eb4DF00867717F6e301966C32);
+        IERC20(0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787);
     uint256 public immutable tokenId;
     uint256 public price;
     address public immutable gov;
