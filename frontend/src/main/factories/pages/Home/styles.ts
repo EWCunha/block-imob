@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const HomeWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+  }
 `
 export const InfoWrapper = styled.div`
   margin-top: 170px;
@@ -10,6 +14,11 @@ export const InfoWrapper = styled.div`
   width: 30%;
   height: 680px;
   display: block;
+
+  @media (max-width: 720px) {
+    width: 100%;
+  }
+
 `
 export const ImageWrapper = styled.div`
   width: 70%;
