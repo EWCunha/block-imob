@@ -18,6 +18,9 @@ contract Fii is ERC20{
     uint256 public sharePrice;
     uint256 public totalShares;
 
+    event mintedShares(uint256 indexed amount, address indexed buyer, uint256 indexed price);
+    event newPrice(uint256 indexed newPrice, address indexed changer);
+
     constructor(string memory _name, string memory _symbol, uint8 _decimals, address _blockImob, address _gov) ERC20(_name,_symbol,_decimals) {
         blockImobContract = IBlockImob(_blockImob) ;
         gov = _gov;
@@ -41,12 +44,21 @@ contract Fii is ERC20{
 
         _mint(msg.sender, _amount);
 
+        emit mintedShares(_amount, msg.sender, sharePrice);
+
     }
 
     function killFii() onlyAllowed external {
         transfer(gov, paymentToken.balanceOf(address(this)));
         selfdestruct(payable(gov));
     } 
+
+
+    function changePrice(uint256 _newPrice) onlyAllowed external{
+        sharePrice = _newPrice;
+
+        emit newPrice(_newPrice, msg.sender);
+    }
 
 
 
