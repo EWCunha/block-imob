@@ -86,7 +86,14 @@ Continuous Delivery
 Continuous Deployment
 
 ---
+---
+Contratos na https://alfajores.celoscan.io:
 
+--- BlockImob Deployed to ---- 0xFa845dd448E7cB148Cfff1E00e5826da7cDc3EC0
+---OracleGov Deployed to ---- 0x509caf51899D4F4C251077C0772bf74a7014ec64
+--- ConsultImob Deployed to ---- 0xDE1655C7aCD88647b66392983830839213eBcb3D
+--- Payments Management Deployed to ---- 0x1b7E45ad45157386b7CECc1c0381610Fe10f3f86
+---
 ## 🗂 Como baixar o projeto
 
 ```bash
