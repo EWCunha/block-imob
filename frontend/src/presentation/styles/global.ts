@@ -18,6 +18,8 @@ export const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    margin: 0;
+    line-height: normal;
   }
 
   .mySwiper{
@@ -60,5 +62,24 @@ export const GlobalStyle = createGlobalStyle`
     align-items: start;
     justify-content: center;
   }
+:root {
+  /* fonts */
+  --font-font-awesome-6-pro: "Font Awesome 6 Pro";
+  --font-archivo: Archivo;
+  --font-poppins: Poppins;
+  --font-audiowide: Audiowide;
+
+  /* font sizes */
+  --font-size-sm: 19.28px;
+  --font-size-base: 19.47px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-gray-100: rgba(0, 0, 0, 0.12);
+
+  /* border radiuses */
+  --br-md: 34px;
+}
+
 
 `

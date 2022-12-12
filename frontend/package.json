@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate": "typechain --target=ethers-v5 './abi/*.json'",
     "prepare": "cd .. && husky install frontend/.husky",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
