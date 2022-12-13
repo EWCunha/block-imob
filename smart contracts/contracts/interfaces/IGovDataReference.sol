@@ -1,4 +1,4 @@
-// // SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 //Contract será Interface referente a consulta se estao regulares ou nao
