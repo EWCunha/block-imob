@@ -14,19 +14,19 @@ module.exports = {
   },
   networks: {
     hardhat: {
-    },
-    alfajores: {
-      // can be replaced with the RPC url of your choice.
-      url: "https://alfajores-forno.celo-testnet.org",
-      accounts: [
-        [process.env.PRIVATE_KEY]
-      ],
-    },
-    celo: {
-      url: "https://forno.celo.org",
-      accounts: [
-        [process.env.PRIVATE_KEY]
-      ],
+    //},
+    // alfajores: {
+    //   // can be replaced with the RPC url of your choice.
+    //   url: "https://alfajores-forno.celo-testnet.org",
+    //   accounts: [
+    //     [process.env.PRIVATE_KEY]
+    //   ],
+    // },
+    // celo: {
+    //   url: "https://forno.celo.org",
+    //   accounts: [
+    //     [process.env.PRIVATE_KEY]
+    //   ],
     }
   },
   etherscan: {
